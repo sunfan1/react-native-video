@@ -220,6 +220,7 @@ def androidxCore_version = safeExtGet('androidxCoreVersion')
 def androidxActivity_version = safeExtGet('androidxActivityVersion')
 
 dependencies {
+    implementation files('libs/lib-decoder-ffmpeg-release.aar')
     // For < 0.71, this will be from the local maven repo
     // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
     //noinspection GradleDynamicVersion

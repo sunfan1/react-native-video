@@ -56,9 +56,13 @@ import androidx.media3.common.util.Util;
 import androidx.media3.datasource.DataSource;
 import androidx.media3.datasource.DataSpec;
 import androidx.media3.datasource.HttpDataSource;
+import androidx.media3.decoder.ffmpeg.FfmpegAudioRenderer;
 import androidx.media3.exoplayer.DefaultLoadControl;
 import androidx.media3.exoplayer.DefaultRenderersFactory;
 import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.exoplayer.Renderer;
+import androidx.media3.exoplayer.audio.AudioRendererEventListener;
+import androidx.media3.exoplayer.audio.AudioSink;
 import androidx.media3.exoplayer.dash.DashMediaSource;
 import androidx.media3.exoplayer.dash.DashUtil;
 import androidx.media3.exoplayer.dash.DefaultDashChunkSource;
@@ -77,6 +81,7 @@ import androidx.media3.exoplayer.drm.UnsupportedDrmException;
 import androidx.media3.exoplayer.hls.HlsMediaSource;
 import androidx.media3.exoplayer.ima.ImaAdsLoader;
 import androidx.media3.exoplayer.mediacodec.MediaCodecInfo;
+import androidx.media3.exoplayer.mediacodec.MediaCodecSelector;
 import androidx.media3.exoplayer.mediacodec.MediaCodecUtil;
 import androidx.media3.exoplayer.rtsp.RtspMediaSource;
 import androidx.media3.exoplayer.smoothstreaming.DefaultSsChunkSource;
@@ -846,6 +851,23 @@ public class ReactExoplayerView extends FrameLayout implements
         }
     }
 
+    class FfmpegRenderersFactory extends DefaultRenderersFactory {
+        /**
+         * @param context A {@link Context}.
+         */
+        public FfmpegRenderersFactory(Context context) {
+            super(context);
+            setExtensionRendererMode(EXTENSION_RENDERER_MODE_ON);
+        }
+
+        @Override
+        protected void buildAudioRenderers(Context context, int extensionRendererMode, MediaCodecSelector mediaCodecSelector, boolean enableDecoderFallback, AudioSink audioSink, Handler eventHandler, AudioRendererEventListener eventListener, ArrayList<Renderer> out) {
+            out.add(new FfmpegAudioRenderer());
+            super.buildAudioRenderers(context, extensionRendererMode, mediaCodecSelector, enableDecoderFallback, audioSink, eventHandler, eventListener, out);
+        }
+
+    }
+
     private void initializePlayerCore(ReactExoplayerView self) {
         ExoTrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory();
         self.trackSelector = new DefaultTrackSelector(getContext(), videoTrackSelectionFactory);
@@ -865,7 +887,7 @@ public class ReactExoplayerView extends FrameLayout implements
         }
 
         DefaultRenderersFactory renderersFactory =
-                new DefaultRenderersFactory(getContext())
+                new FfmpegRenderersFactory(getContext())
                         .setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF)
                         .setEnableDecoderFallback(true)
                         .forceEnableMediaCodecAsynchronousQueueing();
