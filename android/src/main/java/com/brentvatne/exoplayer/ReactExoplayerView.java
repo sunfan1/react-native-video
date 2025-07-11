@@ -857,7 +857,6 @@ public class ReactExoplayerView extends FrameLayout implements
          */
         public FfmpegRenderersFactory(Context context) {
             super(context);
-            setExtensionRendererMode(EXTENSION_RENDERER_MODE_ON);
         }
 
         @Override

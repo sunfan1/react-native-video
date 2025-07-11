@@ -5,6 +5,7 @@ import android.media.MediaDrm
 import android.media.MediaFormat
 import android.media.UnsupportedSchemeException
 import android.os.Build
+import androidx.media3.exoplayer.video.VideoFrameReleaseControl
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
@@ -63,6 +64,13 @@ class VideoDecoderInfoModule(reactContext: ReactApplicationContext?) : ReactCont
 
     @ReactMethod
     fun isHEVCSupported(p: Promise) = isCodecSupported("video/hevc", 1920.0, 1080.0, p)
+
+
+    @ReactMethod
+    fun setViewFrameDelay(delay: Int) {
+        VideoFrameReleaseControl.VIDEO_FRAME_DELAY = delay.toLong();
+    }
+
 
     companion object {
         private val WIDEVINE_UUID = UUID(-0x121074568629b532L, -0x5c37d8232ae2de13L)
