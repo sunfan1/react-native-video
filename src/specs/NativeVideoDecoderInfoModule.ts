@@ -10,7 +10,7 @@ export interface VideoDecoderInfoModuleType {
     height: Int32,
   ) => Promise<'unsupported' | 'hardware' | 'software'>;
   isHEVCSupported: () => Promise<'unsupported' | 'hardware' | 'software'>;
-  getWidevineLevel: (delay: Int32) => void;
+  setViewFrameDelay: (delay: Int32) => void;
 }
 
 export default NativeModules.VideoDecoderInfoModule as VideoDecoderInfoModuleType;
