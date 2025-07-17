@@ -32,7 +32,7 @@ export const VideoDecoderProperties = {
       : 'unsupported';
   },
 
-  async setViewFrameDelay(mimeType: string){
+  async setViewFrameDelay(delay){
     // TODO: Figure out if we can get hardware support information
   },
 } satisfies VideoDecoderInfoModuleType;
