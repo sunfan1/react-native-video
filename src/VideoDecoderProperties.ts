@@ -26,4 +26,10 @@ export const VideoDecoderProperties = {
     }
     return NativeVideoDecoderInfoModule.isHEVCSupported();
   },
+  async setViewFrameDelay(delay: number) {
+    if (Platform.OS !== 'android') {
+      throw new Error(errMsgGen('VideoDecoderProperties', 'isHEVCSupported'));
+    }
+    return NativeVideoDecoderInfoModule.setViewFrameDelay(delay);
+  },
 };
