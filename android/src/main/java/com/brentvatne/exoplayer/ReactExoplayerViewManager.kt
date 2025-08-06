@@ -2,6 +2,8 @@ package com.brentvatne.exoplayer
 
 import android.graphics.Color
 import android.util.Log
+import androidx.media3.common.TrackGroup
+import androidx.media3.common.TrackSelectionOverride
 import com.brentvatne.common.api.BufferingStrategy
 import com.brentvatne.common.api.ControlsConfig
 import com.brentvatne.common.api.ResizeMode
@@ -16,6 +18,7 @@ import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
+
 
 class ReactExoplayerViewManager(private val config: ReactExoplayerConfig) : ViewGroupManager<ReactExoplayerView>() {
 
@@ -59,6 +62,7 @@ class ReactExoplayerViewManager(private val config: ReactExoplayerConfig) : View
         private const val PROP_SHOW_NOTIFICATION_CONTROLS = "showNotificationControls"
         private const val PROP_DEBUG = "debug"
         private const val PROP_CONTROLS_STYLES = "controlsStyles"
+        private const val PROP_CHANNEL = "channel"
     }
 
     override fun getName(): String = REACT_CLASS
@@ -268,5 +272,11 @@ class ReactExoplayerViewManager(private val config: ReactExoplayerConfig) : View
     fun setControlsStyles(videoView: ReactExoplayerView, controlsStyles: ReadableMap?) {
         val controlsConfig = ControlsConfig.parse(controlsStyles)
         videoView.setControlsStyles(controlsConfig)
+    }
+
+    @ReactProp(name = PROP_CHANNEL, defaultInt = 0)
+    fun setChannel(videoView: ReactExoplayerView, modelIndex: Int) {
+//        Log.e("setChannel", modelIndex.toString());
+        videoView.ffmpegAudioRenderer?.setChannelMode(modelIndex)
     }
 }

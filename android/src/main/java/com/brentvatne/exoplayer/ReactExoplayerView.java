@@ -850,6 +850,11 @@ public class ReactExoplayerView extends FrameLayout implements
             promise.reject("PLAYER_NOT_AVAILABLE", "Player is not initialized.");
         }
     }
+    private FfmpegAudioRenderer ffmpegAudioRenderer;
+
+    public FfmpegAudioRenderer getFfmpegAudioRenderer() {
+        return ffmpegAudioRenderer;
+    }
 
     class FfmpegRenderersFactory extends DefaultRenderersFactory {
         /**
@@ -861,7 +866,8 @@ public class ReactExoplayerView extends FrameLayout implements
 
         @Override
         protected void buildAudioRenderers(Context context, int extensionRendererMode, MediaCodecSelector mediaCodecSelector, boolean enableDecoderFallback, AudioSink audioSink, Handler eventHandler, AudioRendererEventListener eventListener, ArrayList<Renderer> out) {
-            out.add(new FfmpegAudioRenderer());
+            ffmpegAudioRenderer = new FfmpegAudioRenderer(eventHandler, eventListener, audioSink);
+            out.add(ffmpegAudioRenderer);
             super.buildAudioRenderers(context, extensionRendererMode, mediaCodecSelector, enableDecoderFallback, audioSink, eventHandler, eventListener, out);
         }
 
