@@ -190,6 +190,11 @@ class ReactExoplayerViewManager(private val config: ReactExoplayerConfig) : View
         videoView.setRateModifier(rate)
     }
 
+    @ReactProp(name = "pitch")
+    fun setPitch(videoView: ReactExoplayerView, pitch: Float) {
+        videoView.setPitchModifier(pitch)
+    }
+
     @ReactProp(name = PROP_MAXIMUM_BIT_RATE)
     fun setMaxBitRate(videoView: ReactExoplayerView, maxBitRate: Float) {
         videoView.setMaxBitRateModifier(maxBitRate.toInt())

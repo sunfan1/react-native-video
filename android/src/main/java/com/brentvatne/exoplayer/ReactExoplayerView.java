@@ -2439,6 +2439,13 @@ public class ReactExoplayerView extends FrameLayout implements
         }
     }
 
+    public void setPitchModifier(float newPitch) {
+        if (player != null) {
+            PlaybackParameters params = new PlaybackParameters(rate, newPitch);
+            player.setPlaybackParameters(params);
+        }
+    }
+
     public void setMaxBitRateModifier(int newMaxBitRate) {
         maxBitRate = newMaxBitRate;
         if (player != null && isUsingVideoABR()) {
