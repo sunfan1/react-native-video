@@ -352,4 +352,5 @@ export interface ReactVideoProps extends ReactVideoEvents, ViewProps {
   controlsStyles?: ControlsStyles; // Android
   disableAudioSessionManagement?: boolean; // iOS
   channel?: number; // Android
+  pitch?: number; // Android
 }

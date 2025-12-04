@@ -402,6 +402,7 @@ export interface VideoNativeProps extends ViewProps {
   onTextTrackDataChanged?: DirectEventHandler<OnTextTrackDataChangedData>; // iOS
   onVideoTracks?: DirectEventHandler<OnVideoTracksData>; // android
   channel?: number; // Android
+  pitch?: number; // Android
 }
 
 type NativeVideoComponentType = HostComponent<VideoNativeProps>;
